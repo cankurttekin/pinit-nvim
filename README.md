@@ -11,12 +11,7 @@ A Neovim plugin for taking project specific notes blazingly fast.
 **Using [packer.nvim](https://github.com/wbthomason/packer.nvim):**
 
 ```lua
-use({
-  "cankurttekin/pinit-nvim",
-  config = function()
-    require("pinit"):setup()
-  end,
-})
+use "cankurttekin/pinit-nvim"
 ```
 
 ## Commands
@@ -29,7 +24,7 @@ use({
 local pinit = require("pinit")
 
 pinit:setup({
-  -- notes_file = "/custom/path.md"
+  -- notes_dir = "/path/to/your/notes",
 })
 
 vim.keymap.set("n", "<leader>pn", function()

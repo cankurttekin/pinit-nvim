@@ -2,10 +2,10 @@ local Pinit = {}
 Pinit.__index = Pinit
 
 Pinit.config = {
-  notes_file = nil,
+  notes_dir = nil,
 }
 
--- Project root = folder with .git, fallback to cwd
+-- find the root folder with .git, fallback to cwd
 local function find_project_root()
   local cwd = vim.fn.getcwd()
   local root = vim.fn.finddir(".git", cwd .. ";")
@@ -13,13 +13,41 @@ local function find_project_root()
   return vim.fn.fnamemodify(root, ":h")
 end
 
--- Path where the notes file will be stored
-local function get_notes_path()
-  if Pinit.config.notes_file then
-    return Pinit.config.notes_file
+local function get_project_name()
+  local git_root = find_project_root()
+
+  -- try git remote URL
+  local remote_url = vim.fn.system({ "git", "-C", git_root, "remote", "get-url", "origin" })
+  remote_url = vim.fn.trim(remote_url or "")
+
+  if remote_url ~= "" and vim.v.shell_error == 0 then
+    -- extract repo name from URL
+    local name = remote_url:match("^.+/(.+)%.git$") or remote_url:match("^.+/(.+)$")
+    if name and name ~= "" then
+      return name
+    end
   end
-  local root = find_project_root()
-  return root .. "/.pinit-nvim-notes.md"
+
+  -- fallback use directory name
+  local dir_name = vim.fn.fnamemodify(git_root, ":t")
+  if dir_name == "" or dir_name == "." then
+    dir_name = "project"
+  end
+
+  return dir_name
+end
+
+function Pinit:get_notes_path()
+  local project_name = get_project_name()
+  local filename = project_name .. ".md"
+
+  if self.config.notes_dir then
+    local base_dir = vim.fn.expand(self.config.notes_dir)
+    vim.fn.mkdir(base_dir, "p") -- ensure it exists
+    return base_dir .. "/" .. filename
+  end
+
+  return find_project_root() .. "/.pinit-nvim-notes.md"
 end
 
 function Pinit:setup(user_config)
@@ -29,7 +57,7 @@ end
 
 function Pinit:open()
   local window = require("pinit.window")
-  local path = get_notes_path()
+  local path = self:get_notes_path()
   window.open(path)
 end
 

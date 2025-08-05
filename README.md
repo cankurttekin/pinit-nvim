@@ -6,7 +6,7 @@ A Neovim plugin for taking project specific notes blazingly fast.
 
 ---
 
-## ⚡ Installation
+## Installation
 
 **Using [packer.nvim](https://github.com/wbthomason/packer.nvim):**
 

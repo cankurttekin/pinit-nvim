@@ -4,7 +4,6 @@ local win_id = nil
 local open_buf = nil
 
 function M.open(file_path)
-  -- If window is already open, close it
   if win_id and vim.api.nvim_win_is_valid(win_id) then
     vim.api.nvim_win_close(win_id, true)
     win_id = nil
@@ -35,10 +34,10 @@ function M.open(file_path)
   open_buf = buf
 
   vim.api.nvim_win_set_option(win_id, "wrap", true)
+  vim.wo[win_id].number = true
   vim.bo[buf].filetype = "markdown"
   vim.bo[buf].bufhidden = "wipe"
 
-  -- save on q or <Esc> then close
   local function close_and_save()
     if vim.bo[buf].modified then
       vim.cmd("silent! write")
@@ -54,7 +53,6 @@ function M.open(file_path)
     vim.keymap.set("n", key, close_and_save, { buffer = buf, noremap = true, silent = true })
   end
 
-  -- auto-save on window leave 
   vim.api.nvim_create_autocmd({ "BufLeave", "BufHidden", "WinClosed" }, {
     buffer = buf,
     callback = function()

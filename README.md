@@ -1,9 +1,12 @@
-# pinit.nvim
+<div align="center">
+# PinIt
+##### taking project-git- specific notes blazingly fast.
 
-A Neovim plugin for taking project specific notes blazingly fast.
+[![Lua](https://img.shields.io/badge/Lua-blue.svg?style=for-the-badge&logo=lua)](http://www.lua.org)
+[![Neovim](https://img.shields.io/badge/Neovim%200.8+-green.svg?style=for-the-badge&logo=neovim)](https://neovim.io)
 
-- Saves markdown notes in your project directory 
-
+<img alt="PinIt" height="280" src="/assets/screenshot.png" />
+</div>
 ---
 
 ## Installation
@@ -24,7 +27,7 @@ use "cankurttekin/pinit-nvim"
 local pinit = require("pinit")
 
 pinit:setup({
-  -- notes_dir = "/path/to/your/notes",
+   notes_dir = "~/.pinitnotes"
 })
 
 vim.keymap.set("n", "<leader>pn", function()

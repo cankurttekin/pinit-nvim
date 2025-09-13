@@ -1,4 +1,5 @@
 <div align="center">
+
 # PinIt
 ##### taking project-git- specific notes blazingly fast.
 
@@ -7,7 +8,6 @@
 
 <img alt="PinIt" height="280" src="/assets/screenshot.png" />
 </div>
----
 
 ## Installation
 

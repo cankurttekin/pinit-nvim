@@ -3,6 +3,14 @@ Pinit.__index = Pinit
 
 Pinit.config = {
   notes_dir = nil,
+
+  window = {
+    type = "float",         -- "float" | "split"
+    width = 0.5,            -- fraction or absolute width
+    height = 0.5,           -- fraction or absolute height
+    split_cmd = "vsplit",   -- "split", "vsplit", "tabnew" 
+    border = "single",      -- "single" | "double" | "rounded" | "solid" | "shadow"
+  },
 }
 
 -- find the root folder with .git, fallback to cwd
@@ -58,7 +66,7 @@ end
 function Pinit:open()
   local window = require("pinit.window")
   local path = self:get_notes_path()
-  window.open(path)
+  window.open(path, self.config.window)
 end
 
 return setmetatable({}, Pinit)

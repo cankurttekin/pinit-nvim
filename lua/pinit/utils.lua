@@ -1,6 +1,6 @@
 local M = {}
 
--- Find project root using .git, fallback to cwd
+-- find project root using .git, fallback to cwd
 function M.find_project_root()
     local cwd = vim.fn.getcwd()
     local root = vim.fn.finddir(".git", cwd .. ";")

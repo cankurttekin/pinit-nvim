@@ -7,7 +7,7 @@ local Window = require("pinit.window")
 
 Pinit.config = Config.defaults
 
--- Get notes path
+-- get notes path
 function Pinit:get_notes_path()
     local project_name = Utils.get_project_name()
     local filename = project_name .. ".md"
@@ -21,13 +21,12 @@ function Pinit:get_notes_path()
     return Utils.find_project_root() .. "/.pinit-nvim-notes.md"
 end
 
--- Setup user config & command
+-- set user config & command
 function Pinit:setup(user_config)
     self.config = Config.merge(user_config)
     vim.api.nvim_create_user_command("PinIt", function() self:open() end, {})
 end
 
--- Open window
 function Pinit:open()
     Window.open(self:get_notes_path(), self.config.window)
 end

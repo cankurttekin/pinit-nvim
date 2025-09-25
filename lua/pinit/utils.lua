@@ -8,7 +8,7 @@ function M.find_project_root()
     return vim.fn.fnamemodify(root, ":h")
 end
 
--- Get project name from git remote or folder name
+-- get project name from git remote or folder name
 function M.get_project_name()
     local git_root = M.find_project_root()
     local remote_url = vim.fn.trim(vim.fn.system({ "git", "-C", git_root, "remote", "get-url", "origin" }) or "")
